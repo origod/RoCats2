@@ -25,13 +25,13 @@ public class SphereRocketController : MonoBehaviour
         // 左クリック押している間、左スフィアに上方向の力を与え続ける
         if (Input.GetMouseButton(0) && leftRb != null)
         {
-            leftRb.AddForce(leftSphereObject.transform.up * thrustForce, ForceMode.Force);
+            leftRb.AddForce(leftSphereObject.transform.up * thrustForce, ForceMode.Impulse);
         }
 
         // 右クリック押している間、右スフィアに上方向の力を与え続ける
         if (Input.GetMouseButton(1) && rightRb != null)
         {
-            rightRb.AddForce(rightSphereObject.transform.up * thrustForce, ForceMode.Force);
+            rightRb.AddForce(rightSphereObject.transform.up * thrustForce, ForceMode.Impulse);
         }
     }
 }
