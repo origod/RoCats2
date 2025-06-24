@@ -4,34 +4,74 @@ public class SphereRocketController : MonoBehaviour
 {
     public GameObject leftSphereObject;
     public GameObject rightSphereObject;
-    public float thrustForce = 20f;
-
     private Rigidbody leftRb;
     private Rigidbody rightRb;
+
+    public float thrustForce = 20f;
+
+    bool inputCK = true;
+
+    Vector3 dir = Vector3.up;
 
     void Start()
     {
         leftRb = leftSphereObject.GetComponent<Rigidbody>();
         rightRb = rightSphereObject.GetComponent<Rigidbody>();
+        leftRb.linearDamping = 10;
+        rightRb.linearDamping = 10;
 
         if (leftRb == null || rightRb == null)
         {
-            Debug.LogError("ƒXƒtƒBƒA‚É Rigidbody ‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚Ü‚¹‚ñI");
+            Debug.LogError("NOã‚¢ã‚¿ãƒƒãƒ");
         }
     }
 
     void FixedUpdate()
     {
-        // ¶ƒNƒŠƒbƒN‰Ÿ‚µ‚Ä‚¢‚éŠÔA¶ƒXƒtƒBƒA‚Éã•ûŒü‚Ì—Í‚ğ—^‚¦‘±‚¯‚é
+        //LRåŒæ™‚ã«æŠ¼ã•ã‚ŒãŸã¨ã
+        if ((Input.GetMouseButton(0) && leftRb != null) && (Input.GetMouseButton(1) && rightRb != null))
+        {
+            Debug.Log("LR");
+            leftRb.AddForce(leftSphereObject.transform.up * thrustForce, ForceMode.Impulse);
+            rightRb.AddForce(rightSphereObject.transform.up * thrustForce, ForceMode.Impulse);
+            inputCK = false;
+            rightRb.useGravity = false;
+            leftRb.useGravity = false;
+
+        }
+        else
+        {
+            inputCK = true;
+        }
+        // LãŒæŠ¼ã•ã‚ŒãŸã¨ã
         if (Input.GetMouseButton(0) && leftRb != null)
         {
-            leftRb.AddForce(leftSphereObject.transform.up * thrustForce, ForceMode.Impulse);
+            if (inputCK)
+            {
+                Debug.Log("L");
+                rightRb.useGravity = false;
+                leftRb.useGravity = false;
+                leftRb.AddForce(leftSphereObject.transform.up * (thrustForce * 1.5f), ForceMode.Impulse);
+                rightRb.AddForce(rightSphereObject.transform.up * thrustForce*1.2f, ForceMode.Impulse);
+            }
         }
-
-        // ‰EƒNƒŠƒbƒN‰Ÿ‚µ‚Ä‚¢‚éŠÔA‰EƒXƒtƒBƒA‚Éã•ûŒü‚Ì—Í‚ğ—^‚¦‘±‚¯‚é
-        if (Input.GetMouseButton(1) && rightRb != null)
+        else if (Input.GetMouseButton(1) && rightRb != null)// RãŒæŠ¼ã•ã‚ŒãŸã¨ã
         {
-            rightRb.AddForce(rightSphereObject.transform.up * thrustForce, ForceMode.Impulse);
+            if (inputCK)
+            {
+                Debug.Log("R");
+                rightRb.useGravity = false;
+                leftRb.useGravity = false;
+                rightRb.AddForce(rightSphereObject.transform.up * (thrustForce * 1.5f), ForceMode.Impulse);
+                leftRb.AddForce(leftSphereObject.transform.up * thrustForce * 1.2f, ForceMode.Impulse);
+            }
         }
+        else
+        {
+            //é‡åŠ›ã‚’ä½¿ã†
+            leftRb.useGravity = true;
+            rightRb.useGravity = true;
+        }
+        
     }
 }
