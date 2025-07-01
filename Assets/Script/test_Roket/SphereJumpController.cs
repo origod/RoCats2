@@ -33,12 +33,8 @@ public class SphereRocketController : MonoBehaviour
         if ((Input.GetMouseButton(0) && leftRb != null) && (Input.GetMouseButton(1) && rightRb != null))
         {
             Debug.Log("LR");
-
-            leftRb.linearDamping = 10;
-            rightRb.linearDamping = 10;
-
-            leftRb.AddForce(leftSphereObject.transform.up * (thrustForce*1f), ForceMode.Impulse);
-            rightRb.AddForce(rightSphereObject.transform.up * (thrustForce*1f), ForceMode.Impulse);
+            leftRb.AddForce(leftSphereObject.transform.up * (thrustForce*1.5f), ForceMode.Impulse);
+            rightRb.AddForce(rightSphereObject.transform.up * (thrustForce*1.5f), ForceMode.Impulse);
             inputCK = false;
             rightRb.useGravity = false;
             leftRb.useGravity = false;
@@ -54,14 +50,10 @@ public class SphereRocketController : MonoBehaviour
             if (inputCK)
             {
                 Debug.Log("L");
-
-                leftRb.linearDamping = 12;
-                rightRb.linearDamping = 12;
-
                 rightRb.useGravity = false;
                 leftRb.useGravity = false;
-                leftRb.AddForce(leftSphereObject.transform.up * (thrustForce * 1.5f), ForceMode.Impulse);
-                rightRb.AddForce(rightSphereObject.transform.up * thrustForce*1.2f, ForceMode.Impulse);
+                leftRb.AddForce(leftSphereObject.transform.up * (thrustForce * 1f), ForceMode.Impulse);
+                rightRb.AddForce(rightSphereObject.transform.up * thrustForce*0.8f, ForceMode.Impulse);
             }
         }
         else if (Input.GetMouseButton(1) && rightRb != null)// Rが押されたとき
@@ -69,15 +61,10 @@ public class SphereRocketController : MonoBehaviour
             if (inputCK)
             {
                 Debug.Log("R");
-
-                leftRb.linearDamping = 12;
-                rightRb.linearDamping = 12;
-
                 rightRb.useGravity = false;
                 leftRb.useGravity = false;
-
-                rightRb.AddForce(rightSphereObject.transform.up * (thrustForce * 1.5f), ForceMode.Impulse);
-                leftRb.AddForce(leftSphereObject.transform.up * thrustForce * 1.2f, ForceMode.Impulse);
+                rightRb.AddForce(rightSphereObject.transform.up * (thrustForce * 1f), ForceMode.Impulse);
+                leftRb.AddForce(leftSphereObject.transform.up * thrustForce * 0.8f, ForceMode.Impulse);
             }
         }
         else
@@ -85,15 +72,13 @@ public class SphereRocketController : MonoBehaviour
             Debug.Log("AnLR");
             rightRb.AddForce(Vector3.down * (thrustForce*1.5f), ForceMode.Impulse);
             leftRb.AddForce(Vector3.down * (thrustForce*1.5f), ForceMode.Impulse);
-
-            leftRb.linearDamping = 20;
-            rightRb.linearDamping = 20;
-
+            //rightRb.linearVelocity = Vector3.zero;
+            //leftRb.linearVelocity = Vector3.zero;
             //重力を使う
             leftRb.useGravity = true;
             rightRb.useGravity = true;
         }
-        
+
     }
 
     private void Update()
