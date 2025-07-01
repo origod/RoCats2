@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SphereRocketController : MonoBehaviour
 {
+    public GameObject player;
     public GameObject leftSphereObject;
     public GameObject rightSphereObject;
     private Rigidbody leftRb;
@@ -32,8 +33,12 @@ public class SphereRocketController : MonoBehaviour
         if ((Input.GetMouseButton(0) && leftRb != null) && (Input.GetMouseButton(1) && rightRb != null))
         {
             Debug.Log("LR");
-            leftRb.AddForce(leftSphereObject.transform.up * thrustForce, ForceMode.Impulse);
-            rightRb.AddForce(rightSphereObject.transform.up * thrustForce, ForceMode.Impulse);
+
+            leftRb.linearDamping = 10;
+            rightRb.linearDamping = 10;
+
+            leftRb.AddForce(leftSphereObject.transform.up * (thrustForce*1f), ForceMode.Impulse);
+            rightRb.AddForce(rightSphereObject.transform.up * (thrustForce*1f), ForceMode.Impulse);
             inputCK = false;
             rightRb.useGravity = false;
             leftRb.useGravity = false;
@@ -49,6 +54,10 @@ public class SphereRocketController : MonoBehaviour
             if (inputCK)
             {
                 Debug.Log("L");
+
+                leftRb.linearDamping = 12;
+                rightRb.linearDamping = 12;
+
                 rightRb.useGravity = false;
                 leftRb.useGravity = false;
                 leftRb.AddForce(leftSphereObject.transform.up * (thrustForce * 1.5f), ForceMode.Impulse);
@@ -60,18 +69,39 @@ public class SphereRocketController : MonoBehaviour
             if (inputCK)
             {
                 Debug.Log("R");
+
+                leftRb.linearDamping = 12;
+                rightRb.linearDamping = 12;
+
                 rightRb.useGravity = false;
                 leftRb.useGravity = false;
+
                 rightRb.AddForce(rightSphereObject.transform.up * (thrustForce * 1.5f), ForceMode.Impulse);
                 leftRb.AddForce(leftSphereObject.transform.up * thrustForce * 1.2f, ForceMode.Impulse);
             }
         }
         else
         {
+            Debug.Log("AnLR");
+            rightRb.AddForce(Vector3.down * (thrustForce*1.5f), ForceMode.Impulse);
+            leftRb.AddForce(Vector3.down * (thrustForce*1.5f), ForceMode.Impulse);
+
+            leftRb.linearDamping = 20;
+            rightRb.linearDamping = 20;
+
             //重力を使う
             leftRb.useGravity = true;
             rightRb.useGravity = true;
         }
         
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            player.transform.position += Vector3.up * 0.5f;
+            player.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
     }
 }
