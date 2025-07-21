@@ -774,6 +774,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 167126293}
+  minX: -7
+  maxX: 7
 --- !u!1 &555389027
 GameObject:
   m_ObjectHideFlags: 0
