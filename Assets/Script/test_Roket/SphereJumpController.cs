@@ -14,6 +14,9 @@ public class SphereRocketController : MonoBehaviour
 
     Vector3 dir = Vector3.up;
 
+    [SerializeField] ShakeManager_L leftSm;
+    [SerializeField] ShakeManager_R rightSm;
+
     void Start()
     {
         leftRb = leftSphereObject.GetComponent<Rigidbody>();
@@ -30,7 +33,8 @@ public class SphereRocketController : MonoBehaviour
     void FixedUpdate()
     {
         //LR同時に押されたとき
-        if ((Input.GetMouseButton(0) && leftRb != null) && (Input.GetMouseButton(1) && rightRb != null))
+        if ((Input.GetMouseButton(0) && leftRb != null) && (Input.GetMouseButton(1) && rightRb != null)||
+            (leftSm .powerOn_L &&leftRb !=null)&&(rightSm.powerOn_R &&rightRb!=null))
         {
             Debug.Log("LR");
             leftRb.AddForce(leftSphereObject.transform.up * (thrustForce*1.5f), ForceMode.Impulse);
@@ -45,7 +49,7 @@ public class SphereRocketController : MonoBehaviour
             inputCK = true;
         }
         // Lが押されたとき
-        if (Input.GetMouseButton(0) && leftRb != null)
+        if ((Input.GetMouseButton(0) && leftRb != null)||(leftSm.powerOn_L && leftRb != null))
         {
             if (inputCK)
             {
@@ -56,7 +60,7 @@ public class SphereRocketController : MonoBehaviour
                 rightRb.AddForce(rightSphereObject.transform.up * thrustForce*0.8f, ForceMode.Impulse);
             }
         }
-        else if (Input.GetMouseButton(1) && rightRb != null)// Rが押されたとき
+        else if ((Input.GetMouseButton(1) && rightRb != null)||(rightSm.powerOn_R && rightRb != null))// Rが押されたとき
         {
             if (inputCK)
             {
