@@ -5,6 +5,9 @@ public class Camera : MonoBehaviour
     public GameObject player;
     private Vector3 offset;
 
+    public float minX;
+    public float maxX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,6 +17,8 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + offset;
+        Vector3 targetPos = player.transform.position + offset;
+        targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
+        transform.position = targetPos;
     }
 }

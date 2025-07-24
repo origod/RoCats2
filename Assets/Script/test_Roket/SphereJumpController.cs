@@ -24,6 +24,9 @@ public class SphereRocketController : MonoBehaviour
         leftRb.linearDamping = 10;
         rightRb.linearDamping = 10;
 
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezePositionZ;
+
         if (leftRb == null || rightRb == null)
         {
             Debug.LogError("NOアタッチ");
